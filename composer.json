@@ -12,7 +12,7 @@
     ],
     "require": {
         "php": ">=5.3.1",
-        "shuble/slurpy": "dev-master"
+        "shuble/slurpy": "*"
     },
     "require-dev": {
         "symfony/console": "2.3.*@dev"
