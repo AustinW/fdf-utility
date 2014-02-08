@@ -44,7 +44,7 @@ class PdfForm
 
     public function generatePdfExample(Factory $pdftk, $sourcePdf, $targetPdf, $tempStorageLocation = null)
     {
-        $this->fields = $this->extractFieldsFromPdf($pdftk, $sourcePdf);
+        $this->fields = $this->fields ?: $this->extractFieldsFromPdf($pdftk, $sourcePdf, $tempStorageLocation);
 
         foreach ($this->fields as $field) {
             $field->setValue($field->getExampleValue());
