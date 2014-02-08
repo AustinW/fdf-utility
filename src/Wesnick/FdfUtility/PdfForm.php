@@ -26,10 +26,12 @@ class PdfForm
      */
     private $fields;
 
-    private function extractFieldsFromPdf(Factory $pdftk, $pdf)
+    private function extractFieldsFromPdf(Factory $pdftk, $pdf, $tempStorageLocation = null)
     {
 
-        $fields_dump = tempnam(sys_get_temp_dir(), 'fdf_dump');
+        $tempStorageLocation = $tempStorageLocation ?: sys_get_temp_dir();
+
+        $fields_dump = tempnam($tempStorageLocation, 'fdf_dump');
 
         $dataDumper = $pdftk->dumpDataFields($pdf, $fields_dump);
         $dataDumper->generate(array(), true);
@@ -40,7 +42,7 @@ class PdfForm
         return $this->fields;
     }
 
-    public function generatePdfExample(Factory $pdftk, $sourcePdf, $targetPdf)
+    public function generatePdfExample(Factory $pdftk, $sourcePdf, $targetPdf, $tempStorageLocation = null)
     {
         $this->fields = $this->extractFieldsFromPdf($pdftk, $sourcePdf);
 
@@ -48,7 +50,9 @@ class PdfForm
             $field->setValue($field->getExampleValue());
         }
 
-        $fdf_file = tempnam(sys_get_temp_dir(), 'fdf');
+        $tempStorageLocation = $tempStorageLocation ?: sys_get_temp_dir();
+        
+        $fdf_file = tempnam($tempStorageLocation, 'fdf');
 
         $writer = new FdfWriter($this->fields);
         $writer->generate();
