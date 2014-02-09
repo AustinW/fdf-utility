@@ -30,7 +30,7 @@ class PdftkDumpParser
      *
      * @var array
      */
-    private $currentContents;
+    private $currentContents = 0;
 
 
     /**
@@ -39,9 +39,18 @@ class PdftkDumpParser
     private $fields;
 
 
-    function __construct($file)
+    function __construct($file = null)
+    {
+        $this->currentContents = ($file && file_exists($file)) ? file($file) : $file;
+    }
+
+    public function setCurrentContents($file)
     {
         $this->currentContents = file($file);
+    }
+
+    public function resetCurrentIndex()
+    {
         $this->currentIndex = 0;
     }
 
