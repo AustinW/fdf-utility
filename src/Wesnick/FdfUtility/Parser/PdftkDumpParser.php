@@ -42,6 +42,7 @@ class PdftkDumpParser
     function __construct($file = null)
     {
         $this->currentContents = ($file && file_exists($file)) ? file($file) : $file;
+        $this->resetCurrentIndex();
     }
 
     public function setCurrentContents($file)
